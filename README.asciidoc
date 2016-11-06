@@ -1,0 +1,83 @@
+= An Introduction to CNC Routing for Wood
+:toc: macro
+
+toc::[]
+
+== CNC Router 4848 Operation
+
+=== Machine Set-Up
+
+. Safety glasses
+. Router power off
+. CNC power on and motor enable
+. Log on to PC (password "4848")
+. Start Mach3, choosing "4848" profile.
+. Press "Reset" to take Mach3 out of emergency stop mode.
+. Press "Ref All Home" to calibrate CNC axes.
+
+=== Loading Stock and Bit
+
+. (optional) Pre-drill hold-down holes in stock using drill press or hand drill.
+. In Mach3, load GCode.
+. Move router head out of the way using arrow keys and PgUp/PgDn.
+. Screw down or otherwise hold down stock.
+. Move router head to convenient location for loading bit.
+. Remove vacuum skirt.
+. Press-snap collet into holder.
+. Screw collet and holder onto spindle loosely.
+. Load bit, 80% into collet, and tighten with collet wrenches.
+. Move bit to program origin. (Often helpful to lower bit near stock surface.)
+. Zero X and Y.
+. Move bit up enough to clear Z sensor, and above flat spot on stock.
+. Place Z sensor under bit and attach ground wire to bit shank.
+. Press "Auto Tool Zero" to zero Z.
+. Remove ground wire and stow Z sensor under table.
+. Attach vacuum skirt.
+. Select router speed.
+. Router power on.
+
+=== Running Program
+
+Ensure that:
+* Router power is on and router speed is set.
+* Vacuum skirt is attached.
+* You know where the "Stop" button is in case you need to stop the program.
+
+To start exhaust vacuum and start program:
+. Open exhaust vacuum valve above CNC and close other valve.
+. Turn on exhaust vacuum.
+. Ear protection.
+. Press "Start" to start program.
+. Press "Start" to continue after first tool selection.
+
+=== Changing Bits
+
+When program pauses for tool change:
+. Router power off.
+. Remove vacuum skirt.
+. Remove bit using collet wrenches.
+. (if changing collet size) Snap out old collet and snap in new collet.
+. Install collet and holder loosely.
+. Load bit 80% into collet and tighten.
+. Move bit up enough to clear Z sensor, and above flat spot on stock.
+. Place Z sensor under bit and attach ground wire to bit shank.
+. Press "Auto Tool Zero" to zero Z.
+. Remove ground wire and stow Z sensor under table.
+. Attach vacuum skirt.
+. Select router speed.
+. Router power on.
+. Press "Start" to continue program.
+
+=== Shutting Down
+
+. Router power off.
+. Remove stock from table.
+. Remove vacuum skirt.
+. Remove bit and collet.
+. Attach vacuum skirt.
+. Move router head out of the way so you can vacuum up dust.
+. Exit Mach3.
+. CNC motor disable and power off.
+. Change vacuum valves for using vacuum hose.
+. Vacuum dust off table and floor.
+. Turn off exhaust vacuum.
