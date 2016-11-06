@@ -3,6 +3,10 @@
 
 toc::[]
 
+== 3D Models for Routing
+
+link::http://a360.co/2edtvyp[RG Logo Coaster]
+
 == CNC Router 4848 Operation
 
 === Machine Set-Up
