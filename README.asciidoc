@@ -39,11 +39,13 @@ toc::[]
 === Running Program
 
 Ensure that:
+
 * Router power is on and router speed is set.
 * Vacuum skirt is attached.
 * You know where the "Stop" button is in case you need to stop the program.
 
 To start exhaust vacuum and start program:
+
 . Open exhaust vacuum valve above CNC and close other valve.
 . Turn on exhaust vacuum.
 . Ear protection.
@@ -53,6 +55,7 @@ To start exhaust vacuum and start program:
 === Changing Bits
 
 When program pauses for tool change:
+
 . Router power off.
 . Remove vacuum skirt.
 . Remove bit using collet wrenches.
