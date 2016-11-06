@@ -12,6 +12,7 @@ link:tomato-coaster.f3d[RG Logo Coaster]
 === Machine Set-Up
 
 . Safety glasses
+. (optional) Dust mask
 . Router power off
 . CNC power on and motor enable
 . Log on to PC (password "4848")
