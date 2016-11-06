@@ -5,7 +5,7 @@ toc::[]
 
 == 3D Models for Routing
 
-link:http://a360.co/2edtvyp[RG Logo Coaster]
+link:tomato-coaster.f3d[RG Logo Coaster]
 
 == CNC Router 4848 Operation
 
