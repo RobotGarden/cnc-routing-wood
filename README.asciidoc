@@ -89,3 +89,8 @@ When program pauses for tool change:
 . Change vacuum valves for using vacuum hose.
 . Vacuum dust off table and floor.
 . Turn off exhaust vacuum.
+
+== References
+
+link:http://www.onsrud.com/files/pdf/LMT-Onsrud-CNC-Prod-Routing-Guide.pdf[Onsrud Guide to Routing] -- Has good
+information about speeds, collets, and bits.
