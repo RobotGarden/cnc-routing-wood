@@ -27,6 +27,14 @@ Used to create toolpaths to cut away stock to generate the model.
 * Passses -- Whether to make multiple cuts, and stock to leave behind
 * Linking -- How to start and end the cut
 
+== Running a Program
+
+=== What Can Go Wrong
+
+* Failure to zero the axes
+* Bit not firmly attached
+* Jammed bit
+
 == 3D Models for Routing
 
 link:tomato-coaster.f3d[RG Logo Coaster]
