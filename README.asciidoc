@@ -15,9 +15,17 @@ Used to create toolpaths to cut away stock to generate the model.
 
 === Creating a Setup
 
-* Stock size
-* Coordinate system
-* Postprocessing -- Program Name
+* Stock size -- Placing the model into the material
+* Coordinate system -- Stock orientation and bit zero point
+* Postprocessing -- Program Name, to set default file name
+
+=== Adding a Toolpath
+
+* Tool -- The tool to use and the speeds (spindle rotation rate and linear speed)
+* Geometry -- Which faces or lines to cut, and any adjustments to the cut geometry
+* Heights -- The depth of cut, among other heights
+* Passses -- Whether to make multiple cuts, and stock to leave behind
+* Linking -- How to start and end the cut
 
 == 3D Models for Routing
 
