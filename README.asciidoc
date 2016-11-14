@@ -3,6 +3,22 @@
 
 toc::[]
 
+== From Model to Toolpaths
+
+=== Fusion 360 Modes
+
+Model::
+Used to create sketches and objects.
+
+CAM::
+Used to create toolpaths to cut away stock to generate the model.
+
+=== Creating a Setup
+
+* Stock size
+* Coordinate system
+* Postprocessing -- Program Name
+
 == 3D Models for Routing
 
 link:tomato-coaster.f3d[RG Logo Coaster]
