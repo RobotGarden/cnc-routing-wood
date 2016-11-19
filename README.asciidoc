@@ -1,11 +1,43 @@
 = An Introduction to CNC Routing for Wood
+:imagesdir: ./images
 :toc: macro
 
 toc::[]
 
+== CNC Routing
+
+Perhaps the best way to introduce CNC Routing concepts is to compare
+them with 3D printing.
+
+* Rather than building up the model layer-by-layer, creating a part
+using the CNC router is _subtractive manufacturing_ -- you are cutting
+away portions of the _stock_ to create an approximation of the model.
+It is much more an approximation of the original model than when 3D
+printing.
+
+* In 3D printing, there are options to control the layer height, the
+infill, and so on, but those options don't fundamentally change what
+is printed. When using the CNC, on the other hand, you can choose
+toolpaths based on the model that could cause drastic differences in
+what is cut.
+
+* 3D printing has to print from bottom to top. In CNC milling, there are
+more choices about the order in which the cuts are made.
+
+* The 3D printer only lays down cylinders of plastic. The CNC has
+different bits to choose from that take away different amounts _and
+different shapes_ of material, and pull on the material in different ways.
+
 == From Model to Toolpaths
 
 === Fusion 360 Modes
+
+The leftmost dropdown in the Fusion 360 toolbar allows you to choose
+among the various editing modes. Different features are available in
+different modes. The most important for creating models and creating
+toolpaths are _Model_ and _CAM_.
+
+image:fusion360-modes.png[Fusion 360 Modes Dropdown]
 
 Model::
 Used to create sketches and objects.
@@ -15,9 +47,24 @@ Used to create toolpaths to cut away stock to generate the model.
 
 === Creating a Setup
 
+Once you move into the _CAM_ mode, you need to start by creating a
+_Setup_, that is, a relationship between your model and the _stock_,
+the piece of wood you are going to cut from. To create a setup, select
+_New Setup_ from the _Setup_ dropdown.
+
+image:new-setup.png[Creating a New Setup]
+
+The three most important things to specify are:
+
 * Stock size -- Placing the model into the material
 * Coordinate system -- Stock orientation and bit zero point
 * Postprocessing -- Program Name, to set default file name
+
+==== Specifying the Stock Size
+
+In the _Stock_ tab of the New Setup dialog, you specify the size of the
+stock in relation to the model. The default relationship is
+_Relative size box_. This allows you 
 
 === Adding a Toolpath
 
