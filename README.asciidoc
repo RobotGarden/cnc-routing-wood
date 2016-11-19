@@ -4,12 +4,30 @@
 
 toc::[]
 
-== CNC Routing
+== CNC Milling
 
-Perhaps the best way to introduce CNC Routing concepts is to compare
+_mill_::
+a machine that manufactures by the continuous repetition of some simple action
+
+We have two tools available for cutting parts out of wood:
+
+. The link:http://www.cncrouterparts.com/pro4848-4-x-4-cnc-router-kit-p-251.html[Pro 4848 CNC Router]
+
+. The link:http://carbide3d.com/nomad/[Nomad 883 Pro]
+
+These machines are similar, and may both be called _CNC mills_. This
+class introduces the Pro 4848, a 4'x4' machine that is more often called
+a _CNC router_, because is it based on an off-the-shelf router rather
+than a more flexible _milling spindle_ that has a wider range of
+rotational speeds. The Pro 4848 is often more suitable for wood because
+of its larger work area.
+
+=== Milling vs. 3D Printing
+
+Perhaps the best way to introduce CNC Milling concepts is to compare
 them with 3D printing.
 
-* Rather than building up the model layer-by-layer, creating a part
+* Rather than building up the model layer-by-layer, milling a part
 using the CNC router is _subtractive manufacturing_ -- you are cutting
 away portions of the _stock_ to create an approximation of the model.
 It is much more an approximation of the original model than when 3D
@@ -18,7 +36,7 @@ printing.
 * In 3D printing, there are options to control the layer height, the
 infill, and so on, but those options don't fundamentally change what
 is printed. When using the CNC, on the other hand, you can choose
-toolpaths based on the model that could cause drastic differences in
+tool paths based on the model that could cause drastic differences in
 what is cut.
 
 * 3D printing has to print from bottom to top. In CNC milling, there are
@@ -28,14 +46,50 @@ more choices about the order in which the cuts are made.
 different bits to choose from that take away different amounts _and
 different shapes_ of material, and pull on the material in different ways.
 
-== From Model to Toolpaths
+=== 2D vs. 2-1/2 D vs. 3D Milling
+
+Many parts and models consist of flat surfaces at different heights.
+Milling of these parts is called 2-1/2 D. Models that have curved
+surfaces, either convex or concave, require 3D milling. Milling curved
+surfaces requires different kinds of tool paths. You can select them in
+Fusion 360, but they are  beyond the scope of this
+intro.
+
+== 3D Models for Milling
+
+You can create models for milling using any 3D modeling program.
+However, using Fusion 360 to create tool paths is easier if the 3D
+solids are built using Fusion.
+
+When 3D printing, it's easy to grab STL files from sites like
+Thingiverse and then print them using any slicing tool. Unfortunately,
+it's harder to get models for milling. In particular, it's hard to
+take STL files and then create tool paths, because of the difference
+in structure between STLs and other types of models. For this reason,
+you either need to use Fusion 360 to create the models, or export models
+from other tools using a standard format such as IGES or STEP.
+
+== GCode for Control of the Milling Machine
+
+_GCode_ is the programming language used to control the CNC machine.
+This language is shared with the 3D printing world. Some commands differ,
+however, because of the different ways to control the tool. GCode
+commands unique to CNC milling include:
+
+* Control of the spindle speed -- Ignored with the Pro 4848 since you
+have to control the spindle speed by a dial on the router.
+
+* Tool selection -- Commands to allow the operator to change the bit
+during the milling program.
+
+== From Model to Tool Paths
 
 === Fusion 360 Modes
 
 The leftmost dropdown in the Fusion 360 toolbar allows you to choose
 among the various editing modes. Different features are available in
 different modes. The most important for creating models and creating
-toolpaths are _Model_ and _CAM_.
+tool paths are _Model_ and _CAM_.
 
 image:fusion360-modes.png[Fusion 360 Modes Dropdown]
 
@@ -43,7 +97,7 @@ Model::
 Used to create sketches and objects.
 
 CAM::
-Used to create toolpaths to cut away stock to generate the model.
+Used to create tool paths to cut away stock to generate the model.
 
 === Creating a Setup
 
@@ -66,7 +120,39 @@ In the _Stock_ tab of the New Setup dialog, you specify the size of the
 stock in relation to the model. The default relationship is
 _Relative size box_. This allows you 
 
-=== Adding a Toolpath
+=== Adding a Tool Path
+
+You can add tool paths to the setup using the 2D and 3D dropdowns, or by
+right-clicking on the setup and selecting _New Operation_ and selecting
+an operation in that popup menu.
+
+For the purposes of this class, we'll stick to three kinds of paths:
+_Face_, _2D Pocket_, and _2D Contour_. These tool paths are suitable
+for these purposes:
+
+_Face_::
+Planing a surface to a uniform depth. This can be used to shave off
+material when the stock is thicker than your model. The path used to
+perform a _Face_ operation will move the bit back and forth over the
+area to be faced.
+
+_2D Pocket_::
+This tool path is used to cut material down to a flat surface in the
+model. This can be used either for an interior hole or other flat
+face in the model. The pocket can cut all the way through the stock
+or only partway. The path used to cut the pocket will be a spiral, or
+perhaps multiple spirals. You can also choose to cut in multiple steps,
+rather than all in one operation.
+
+_2D Contour_::
+This tool path is used to cut along an edge. Much like 2D Pocket, you can
+cut down to a desired depth in one step or multiple steps. 2D Contour is
+often used to cut out parts from the stock.
+
+=== Controls for Tool Paths
+
+The dialog used to add a tool path has several tabs that are the same,
+no matter the type of path selected.
 
 * Tool -- The tool to use and the speeds (spindle rotation rate and linear speed)
 * Geometry -- Which faces or lines to cut, and any adjustments to the cut geometry
@@ -74,17 +160,188 @@ _Relative size box_. This allows you
 * Passses -- Whether to make multiple cuts, and stock to leave behind
 * Linking -- How to start and end the cut
 
+=== Speeds and Feeds
+
+This tab allows you to select the bit to use and the speeds used when
+cutting the path.
+
+image:tool-speeds.png[Tool Feeds and Speeds]
+
+The machine deals with two speed controls:
+
+_Spindle Speed_::
+The rotation rate of the router spindle, in RPM.
+
+_Cutting Feedrate_::
+The linear speed at which the spindle is moved through the stock.
+
+However, these two rates are dependent on the bit size and the number of
+flutes. It is easier to
+work with two other parameters that are independent of the bit size:
+
+_Surface Speed_::
+This is the linear speed at which the cutting edge moves through the
+stock, measured in either ft/minute or meters/minute.
+The ideal surface speed varies with the material and the tool.
+Wood has a large range of acceptable surface speeds. A starting point
+suggested by one source is 1100 ft/minute. For small bit sizes this
+is faster than is achievable.
+
+_Feed per Tooth_::
+Also known as _chip load_. The amount of material cut away by one pass of
+one flute. This also varies based on the material and the tool. Wood has
+a large range of acceptable chip loads, up to about 0.03" (=0.76mm).
+
+In general, for 1/8" bits you can run at the maximum, 25,000 RPM. For 1/4"
+bits a slower speed is probably needed, 16,500 RPM is a reasonable
+default.
+
+=== Geometry
+
+image:geometry.png[Geometry of the Tool Path]
+
+This tab allows you to select the portions of the model used to generate
+the tool path. For facing or 2D pocket operations, you select a face
+in the model. For 2D contour operations you select an edge.
+
+When selecting an edge, you choose an entire closed path, by default.
+If you want to select only a portion of an edge, hold down the Option or
+Alt key when clicking on the path.
+
+The other main thing to select in the Geometry tab is whether to leave
+_tabs_ connecting the cut to the rest of the part. This is used for
+2D pocket tool paths when cutting out the part from the rest of the stock.
+
+=== Heights
+
+In this tab you choose the various heights at which the tool operates.
+The most important, in fact the only one you usually need to adjust,
+is the _Bottom Height_.
+
+=== Passes
+
+In this tab you control whether the cut happens in one step or multiple
+steps. You can also control the _Stock to Leave_. By default the 2D
+Pocket tool path leaves a little stock behind. If you don't want this,
+uncheck _Stock to Leave_.
+
+==== Roughing vs. Finishing
+
+Larger values of _Feed per Tooth_ make the job run faster but can cause
+a lower quality surface finish. To run faster with high quality you can
+use two paths in a row: a roughing pass with larger feed per tooth, and
+then a finishing pass with lower feed per tooth.
+
+For the purposes of this class, we'll try to do everything in one pass.
+
+=== Linking
+
+This tab is used to control how this tool path is connected to the
+adjacent paths, as well as how this path is entered. The most important
+considerations are probably:
+
+How the initial depth is reached::
+By default, for 2D Pocket operations Fusion 360 will choose to slowly
+reach the target depth using a helical path. This is quite slot and
+unneeded for wood. For wood you should usually choose _Plunge_.
+
+Lead-in and lead-out::
+Fusion likes to ease into a cut from an angle. Normally this is fine.
+However, occasionally you may want to disable lead-in and lead-out to
+avoid cutting adjacent areas of the stock.
+
+=== Changing Bits or Router Speeds
+
+If you select a different bit for a new tool path, the program will
+automatically stop to let you change the bit. If you want to change
+the speed only, you need to insert a _force tool change_ operation
+into the program. Right-click on the setup and select _New Operation_
+> _Manual NC_, then select a _Force tool change_ operation.
+
+=== Other Features
+
+Reorder the tool paths::
+You can use drag-and-drop to reorder the tool paths within a program.
+
+Multiple setups::
+You can create multiple setups with different tool paths. Each setup
+can be exported to a separate GCode file.
+
+== Simulating the Tool Paths
+
+When you select either the setup or a single toolpath, you can similate
+the operation by pressing the simulate button.
+
+image:simulate-button.png[The Simulate Button]
+
+Within the simulation you can turn on or off the view of the stock or
+toolpaths. You can also control the speed of the simulation, or even jump
+forward to the end to see what was cut out of the stock.
+
+The _Statistics_ tab can be used to see a summary of how long it will
+take to run the program.
+
+== Exporting GCode
+
+Once you are ready to export GCode to disk, press the _Post Process_
+button.
+
+image:post-process.png[Post-processing]
+
+In the Post Process dialog you can select the machine you are generating
+GCode for and set the program name, which becomes the default GCode
+file name.
+
+=== File Extensions
+
+The default file extension for the 4'x4' router is _.tap_. However,
+within Mach3 you can load a file with any extension by using options
+in the file dialog.
+
+The Nomad 883 uses a different file extension.
+
 == Running a Program
+
+=== Important: Zeroing the Axes
+
+To run a program you need to load the GCode, then zero the axes. Once
+that is done you press the "Start program" button to run the GCode.
+It is very important that you ensure the axes are zeroed correctly.
+Failure to zero the axes can cause you to cut the wrong portion of the
+stock.
 
 === What Can Go Wrong
 
-* Failure to zero the axes
-* Bit not firmly attached
-* Jammed bit
+* Failure to zero the axes -- it's easy to move the spindle to the zero
+point and then forget to press "Zero X" and "Zero Y". To avoid this, move
+the head back to the zero point after zeroing the axes to make sure X,
+Y, and Z coordinates are near zero. _This is really easy to get wrong!_
 
-== 3D Models for Routing
+* Bit not firmly attached -- 1/8" bits are harder to secure in the collet
+than bits with larger shanks. Make sure the bit is 80% of the way into
+the collet.
 
-link:tomato-coaster.f3d[RG Logo Coaster]
+* Jammed bit -- the MDF wood of the spoilboard doesn't cut very well.
+Instead of making chips it mills into powder. Downcut bits don't clear
+this powder very well, so it's possible to cut too deeply into the
+spoilboard and jam the bit. To avoid this, don't cut too deeply below
+the bottom of the stock. Usually 1mm is sufficient to guarantee that
+you are cutting all the way through the stock.
+
+* Stock not level -- The spoilboard is soft and can compress
+a bit, possibly making your stock non-level. In addition, as portions of
+the spoilboard are cut away, it can become more compressible. If you need
+the stock to be very level, check the stock alignment by moving the bit
+around with constant Z, making sure the clearance above the stock is
+uniform. You might have to clamp portions of the stock harder to level it.
+
+== Sample Models for Milling
+
+Here are a couple of sample models that are suitable for 2-1/2 D milling.
+
+* Tomato coaster with Robot Garden "tomato" logo -- link:tomato-coaster.f3d[RG Logo Coaster]
+
+* Livermorium coaster -- link:livermorium-coaster.f3d[Livermorium Coaster]
 
 == CNC Router 4848 Operation
 
@@ -95,7 +352,7 @@ link:tomato-coaster.f3d[RG Logo Coaster]
 . Router power off
 . CNC power on and motor enable
 . Log on to PC (password "4848")
-. Start Mach3, choosing "4848" profile.
+. Start Mach3, choosing "PRO 4848" profile.
 . Press "Reset" to take Mach3 out of emergency stop mode.
 . Press "Ref All Home" to calibrate CNC axes.
 
@@ -116,6 +373,8 @@ link:tomato-coaster.f3d[RG Logo Coaster]
 . Place Z sensor under bit and attach ground wire to bit shank.
 . Press "Auto Tool Zero" to zero Z.
 . Remove ground wire and stow Z sensor under table.
+. *Double-check the axes zero by moving the bit back to near the zero
+point on all three axes and ensuring it is where you expect.*
 . Attach vacuum skirt.
 . Select router speed.
 . Router power on.
@@ -126,7 +385,8 @@ Ensure that:
 
 * Router power is on and router speed is set.
 * Vacuum skirt is attached.
-* You know where the "Stop" button is in case you need to stop the program.
+* You know where the "Stop" button is in case you need to stop the
+program.
 
 To start exhaust vacuum and start program:
 
@@ -173,3 +433,5 @@ When program pauses for tool change:
 
 link:http://www.onsrud.com/files/pdf/LMT-Onsrud-CNC-Prod-Routing-Guide.pdf[Onsrud Guide to Routing] -- Has good
 information about speeds, collets, and bits.
+
+link:http://acssgt01.tripod.com/documents/Speeds_and_Feeds.pdf[Mastercam Handbook Speed & Feeds Appendix] -- Another good source for default speeds and feeds.
