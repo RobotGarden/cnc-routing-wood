@@ -302,6 +302,18 @@ The Nomad 883 uses a different file extension.
 
 == Running a Program
 
+=== Holding Down Your Work
+
+There are several options for holding down your work:
+
+* (Easiest) Use deck screws into the spoilboard. For harder woods,
+pre-drill the holes.
+
+* Double-stick tape. There are two kinds near the Nomad.
+
+* Hold-down clamps. I've made four from mending plates, and I'm planning
+on milling some from oak. There are several commercial varieties.
+
 === Important: Zeroing the Axes
 
 To run a program you need to load the GCode, then zero the axes. Once
@@ -309,6 +321,12 @@ that is done you press the "Start program" button to run the GCode.
 It is very important that you ensure the axes are zeroed correctly.
 Failure to zero the axes can cause you to cut the wrong portion of the
 stock.
+
+=== Milling More Than One Copy
+
+To mill another copy of a model, move the bit to the new X and Y zero
+position and re-zero both axes. You should not have to re-zero Z, but
+it doesn't hurt. Then start the program again.
 
 === What Can Go Wrong
 
@@ -334,6 +352,15 @@ the spoilboard are cut away, it can become more compressible. If you need
 the stock to be very level, check the stock alignment by moving the bit
 around with constant Z, making sure the clearance above the stock is
 uniform. You might have to clamp portions of the stock harder to level it.
+
+=== Recovering From Problems
+
+Stopping the Mill::
+Use the "stop program" button, the "Emergency Stop" Mach3 button,
+or the red safety stop button.
+
+Rewinding the Program::
+There is a "rewind" button in Mach3. You have to stop the program first.
 
 == Sample Models for Milling
 
