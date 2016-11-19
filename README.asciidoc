@@ -309,10 +309,38 @@ There are several options for holding down your work:
 * (Easiest) Use deck screws into the spoilboard. For harder woods,
 pre-drill the holes.
 
-* Double-stick tape. There are two kinds near the Nomad.
+* Double-stick tape. There are two kinds near the Nomad. I've had luck
+with this technique for plywood and thin wood, but Jim has had
+failures with thicker stock.
 
 * Hold-down clamps. I've made four from mending plates, and I'm planning
 on milling some from oak. There are several commercial varieties.
+
+==== Cutting Completely Around a Model
+
+You can cut a model completely out of the stock, but you have to take
+care to hold the model in place as you finish cutting it out. I've tried
+three things:
+
+Leaving "tabs" on the model::
+In Fusion 360, you can cut a contour while leaving small tabs that
+connect the model to the rest of the stock. In other words, you don't
+actually cut the model out completely. You can remove the tabs using
+a wood chisel or metal snips.
+
+Double-stock tape::
+If the amount of wood you are cutting in the last step is small, there
+will be little torque on the stock, so double-stick tape can keep the
+model stuck to the table. This might only work for models that aren't
+very thick.
+
+Moving clamps::
+You can cut part-way around the model, then apply a clamp, crossing
+the perimeter where you've already cut, then cut the rest of the way.
+
+Screws through the model::
+If you have areas in the model where you can mill or pre-drill holes,
+you can screw the stock down both outside the model and inside the model.
 
 === Important: Zeroing the Axes
 
